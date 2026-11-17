@@ -21,6 +21,8 @@ aside{display:none!important}
 x-shape{display:block}
 x-shape[kind="arrow-right"]{clip-path:polygon(0 30%,60% 30%,60% 0,100% 50%,60% 100%,60% 70%,0 70%)}
 img{display:block}
+a.qrlink{color:inherit;text-decoration:none;cursor:pointer;display:block}
+p.url a.qrlink{display:inline;text-decoration:underline;text-underline-offset:6px}
 /* slide transitions */
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeOut{from{opacity:1}to{opacity:0}}
@@ -204,10 +206,10 @@ body.presenter #pv{display:flex}
 <div class="spacer"></div>
 <p class="lead rise" style="--i:1">QR을 찍고<br>지금 내 배터리 남기기</p>
 <p class="sub rise" style="--i:2; margin-top:32px">예) 40%, 어제 지도안 쓰느라</p>
-<p class="url">padlet.com/dobbi7871</p>
+<p class="url"><a class="qrlink" href="https://padlet.com/dobbi7871/6-2-71csulz6ak85967y" target="_blank" rel="noopener">padlet.com/dobbi7871</a></p>
 <div class="spacer"></div>
 </div>
-<div class="qrbox rise" style="--i:2"><img src="assets/qr-padlet.png" alt="패들렛 입장 QR 코드" style="width:600px; height:600px; object-fit:contain"></div>
+<div class="qrbox rise" style="--i:2"><a class="qrlink" href="https://padlet.com/dobbi7871/6-2-71csulz6ak85967y" target="_blank" rel="noopener"><img src="assets/qr-padlet.png" alt="패들렛 입장 QR 코드" style="width:600px; height:600px; object-fit:contain"></a></div>
 </div>
 <aside>첫 칸에 '지금 내 배터리'를 숫자와 이유 한마디로 올리게 합니다. 제목에는 번호만 씁니다. 몇 개를 소리 내어 읽고 "평균 배터리 몇 %네요"처럼 받아치며 분위기를 풉니다. 오늘 쓸 링크와 결과물이 모두 이 보드에 모입니다. (3분)</aside>
 </section>
@@ -222,10 +224,10 @@ body.presenter #pv{display:flex}
 <div class="rule rise" style="--i:2"><p class="n">02</p><p class="t">20초씩 이어 그리기</p></div>
 <div class="rule rise" style="--i:3"><p class="n">03</p><p class="t">정답 기회는 3번</p></div>
 </div>
-<p class="url">dobbi52.github.io/catchmind</p>
+<p class="url"><a class="qrlink" href="https://dobbi52.github.io/catchmind/" target="_blank" rel="noopener">dobbi52.github.io/catchmind</a></p>
 <div class="spacer"></div>
 </div>
-<div class="qrbox rise" style="--i:2"><img src="assets/qr-catch.png" alt="픽셀 캐치마인드 접속 QR 코드" style="width:600px; height:600px; object-fit:contain"></div>
+<div class="qrbox rise" style="--i:2"><a class="qrlink" href="https://dobbi52.github.io/catchmind/" target="_blank" rel="noopener"><img src="assets/qr-catch.png" alt="픽셀 캐치마인드 접속 QR 코드" style="width:600px; height:600px; object-fit:contain"></a></div>
 </div>
 <aside>교사 화면은 전자칠판에 띄우고, 교생은 폰으로 접속합니다. 그린 팀도 맞힌 사람과 같은 점수를 받습니다. 몇 판 진행합니다. (8분)</aside>
 </section>
@@ -407,7 +409,7 @@ body.presenter #pv{display:flex}
     else if((k==='p'||k==='P')&&!presenter){window.open(location.pathname+'?presenter','presenter','width=900,height=700')}
   });
   if(!presenter){
-    stage.addEventListener('click',function(e){ if(e.clientX<innerWidth*0.25) go(-1); else go(1) });
+    stage.addEventListener('click',function(e){ if(e.target.closest('a')) return; if(e.clientX<innerWidth*0.25) go(-1); else go(1) });
     var tx=null; addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
     addEventListener('touchend',function(e){ if(tx===null) return; var dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>50) go(dx<0?1:-1); tx=null });
     var help=document.getElementById('help'); setTimeout(function(){help.classList.add('hide')},5000);
