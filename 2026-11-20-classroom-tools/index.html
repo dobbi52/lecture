@@ -36,6 +36,12 @@ p.url a.qrlink{display:inline;text-decoration:underline;text-underline-offset:6p
 .t-push-out-l{animation:pushOutL 700ms cubic-bezier(.65,0,.35,1) both}
 .t-push-in-l{animation:pushInL 700ms cubic-bezier(.65,0,.35,1) both}
 .t-push-out-r{animation:pushOutR 700ms cubic-bezier(.65,0,.35,1) both}
+/* fullscreen button */
+#fsBtn{position:fixed;top:16px;right:16px;z-index:12;display:flex;align-items:center;gap:8px;font:700 16px 'Noto Sans KR',sans-serif;color:#1F1B3A;background:#FFC93C;border:3px solid #1F1B3A;box-shadow:4px 4px 0 #1F1B3A;padding:8px 14px;cursor:pointer;transition:opacity .4s}
+#fsBtn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 #1F1B3A}
+#fsBtn.idle{opacity:0;pointer-events:none}
+#fsBtn svg{width:18px;height:18px}
+body.presenter #fsBtn,:fullscreen #fsBtn{display:none}
 /* notes + help */
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:40vh;overflow:auto;background:rgba(20,18,40,.94);color:#F7F5EF;font:20px/1.6 'Noto Sans KR',sans-serif;padding:20px 28px;display:none;z-index:10}
 #notes b{color:#FFC93C}
@@ -343,6 +349,7 @@ body.presenter #pv{display:flex}
 <aside>실습 기간에 해 봤거나 해 보고 싶은 활동 하나를 노션 표와 같은 형식(활동명 · 쓸 시기 · 준비물)으로 한 줄 씁니다. (2분) 다 모이면 전자칠판에 마지막 칸을 띄우고: "혼자 쌓으면 1개, 같이 쌓으면 20개입니다. 이 칸이 여러분의 첫 자료 모음입니다." 마치며 인사.</aside>
 </section>
 </div>
+<button id="fsBtn" type="button" aria-label="전체 화면으로 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/></svg>전체 화면</button>
 <div id="notes"></div>
 <div id="help">→ / 스페이스: 다음 · ←: 이전 · F: 전체 화면 · N: 노트 · P: 발표자 창 · H: 강의 목록</div>
 <div id="pv">
@@ -412,6 +419,12 @@ body.presenter #pv{display:flex}
     stage.addEventListener('click',function(e){ if(e.target.closest('a')) return; if(e.clientX<innerWidth*0.25) go(-1); else go(1) });
     var tx=null; addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
     addEventListener('touchend',function(e){ if(tx===null) return; var dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>50) go(dx<0?1:-1); tx=null });
+    var fsBtn=document.getElementById('fsBtn'), idleT=null;
+    function toggleFs(){ if(!document.fullscreenElement){ var r=document.documentElement.requestFullscreen; r&&r.call(document.documentElement) } else document.exitFullscreen() }
+    fsBtn.addEventListener('click',function(e){e.stopPropagation();toggleFs()});
+    function wake(){ fsBtn.classList.remove('idle'); clearTimeout(idleT); idleT=setTimeout(function(){fsBtn.classList.add('idle')},3000) }
+    addEventListener('mousemove',wake); wake();
+    document.addEventListener('fullscreenchange',function(){ fsBtn.style.display=document.fullscreenElement?'none':'' });
     var help=document.getElementById('help'); setTimeout(function(){help.classList.add('hide')},5000);
   } else {
     document.getElementById('pvPrev').onclick=function(){go(-1)};
