@@ -2,7 +2,7 @@
 window.LECTURES = [
   {
     "title": "배움을 돕는 수업 기자재 활용",
-    "date": "2026. 11. 20.",
+    "date": "2026. 11. 20. (금)",
     "audience": "교육실습생 연수",
     "path": "2026-11-20-classroom-tools/",
     "color": "#2FB39A"
